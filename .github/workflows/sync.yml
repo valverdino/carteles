@@ -1,0 +1,17 @@
+name: Sync to valverdino
+
+on:
+  push:
+    branches: ["**"]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Push to valverdino
+        run: |
+          git remote add valverdino https://x-access-token:${{ secrets.VALVERDINO_TOKEN }}@github.com/valverdino/${{ github.event.repository.name }}.git
+          git push valverdino --all --force
